@@ -4,15 +4,12 @@ services:
     build:
       context: .
     ports:
-      - "3000:3000"   # локально на Маке будет доступно :3000
+      - "3000:3000"   # локально на Маке будет доступно :3001
     env_file:
       - .env.local          # если нужны секреты/переменные
     healthcheck:
-      test: ["CMD", "wget", "--spider", "-q", "http://localhost:3000/"]
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:${PORT}/"]
       interval: 30s
       timeout: 10s
       retries: 3
       start_period: 10s
-    # Если нужен доступ к файлам хоста:
-    # volumes:
-    #   - ./:/app

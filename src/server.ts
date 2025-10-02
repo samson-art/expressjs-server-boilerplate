@@ -11,6 +11,7 @@ class ExpressServer {
   constructor() {
     this.app = express();
     this.config = this.loadConfig();
+    this.setupStatic();
     this.setupRoutes();
   }
 
@@ -26,8 +27,14 @@ class ExpressServer {
 
   private setupRoutes(): void {
     this.app.get('/', (req: Request, res: Response) => {
-      res.send('Hello World');
+      res.sendFile(require('path').join(process.cwd(), 'client', 'dist', 'client', 'index.html'));
     });
+  }
+
+  private setupStatic(): void {
+    const path = require('path');
+    const staticDir = path.join(process.cwd(), 'client', 'dist', 'client');
+    this.app.use(express.static(staticDir, { index: false, extensions: ['html', 'htm'] }));
   }
 
   public start(): void {

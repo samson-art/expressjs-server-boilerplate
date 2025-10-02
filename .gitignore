@@ -7,8 +7,6 @@ pnpm-debug.log*
 
 # Env
 .env
-.env.*
-!.env.local.example
 
 # Logs
 logs
@@ -24,6 +22,14 @@ logs
 
 # Build
 dist/
+
+# Vite
+.vite/
+client/dist/
+
+# Cloudflare tunnel
+cloudflare.out
+.cloudflare.pid
 
 
 

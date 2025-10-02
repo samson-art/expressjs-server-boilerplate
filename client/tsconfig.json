@@ -1,8 +1,9 @@
 {
+  "extends": "../tsconfig.json",
   "compilerOptions": {
     "target": "ES2020",
-    "module": "CommonJS",
-    "moduleResolution": "node",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
     "lib": ["ES2020", "DOM"],
     "jsx": "react-jsx",
     "outDir": "./dist",
@@ -22,13 +23,10 @@
     "exactOptionalPropertyTypes": true
   },
   "include": [
-    "src/**/*",
-    "scripts/**/*",
-    "vite.config.ts"
+    "src/**/*"
   ],
   "exclude": [
     "node_modules",
-    "dist",
-    "client/**/*"
+    "dist"
   ]
 }

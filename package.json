@@ -5,24 +5,34 @@
   "main": "dist/server.js",
   "type": "commonjs",
   "scripts": {
-    "build": "tsc",
-    "start": "node dist/server.js",
-    "dev": "ts-node src/server.ts",
-    "type-check": "tsc --noEmit"
+    "build:server": "tsc -p tsconfig.server.json",
+    "dev:server": "ts-node src/server.ts",
+    "type-check": "tsc --noEmit",
+    "dev": "concurrently \"vite\" \"ts-node src/server.ts\"",
+    "build:client": "vite build",
+    "ssg": "ts-node scripts/prerender.ts",
+    "build": "npm run build:client && npm run ssg && npm run build:server",
+    "start": "node dist/src/server.js"
   },
   "engines": {
     "node": ">=20"
   },
   "license": "MIT",
   "dependencies": {
-    "express": "^4.19.2"
+    "express": "^4.19.2",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
   },
   "devDependencies": {
     "@types/express": "^4.17.21",
     "@types/node": "^20.10.0",
+    "@types/react": "^18.2.46",
+    "@types/react-dom": "^18.2.18",
+    "@vitejs/plugin-react": "^4.3.1",
+    "cloudflared": "^0.7.1",
+    "concurrently": "^8.2.2",
+    "ts-node": "^10.9.0",
     "typescript": "^5.3.0",
-    "ts-node": "^10.9.0"
+    "vite": "^5.4.0"
   }
 }
-
-

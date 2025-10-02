@@ -1,0 +1,30 @@
+name: Deploy to Home Mac
+
+on:
+  push:
+    branches: [ "main" ]   # или master, если так названа ветка
+
+jobs:
+  deploy:
+    runs-on: [ self-hosted, mac, docker, production ]  # метки раннера
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Docker prune (optional)
+        run: |
+          docker system prune -f
+
+      - name: Build & Redeploy
+        run: |
+          make deploy-prod
+
+      - name: Smoke check
+        run: |
+          for i in {1..10}; do
+            curl -fsS http://localhost:3000/ && exit 0
+            sleep 2
+          done
+          echo "Healthcheck failed"
+          docker logs --tail 200 my-express-app
+          exit 1
